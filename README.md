@@ -1,2 +1,5 @@
 # slim-framework
-Uma aplicação usando o Slim Framework - PHP
+
+[![Software License][ico-license]](LICENSE)
+
+Estudo de uma aplicação usando o Slim Framework - PHP

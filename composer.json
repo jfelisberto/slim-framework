@@ -1,0 +1,22 @@
+{
+    "name": "jfelisberto/slim-framework",
+    "require": {
+        "slim/slim": "^4.14",
+        "league/plates": "^3.5",
+        "slim/psr7": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        },
+        "files": [
+            "app/Helpers/Helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Juliano Felisberto",
+            "email": "juliano.felisberto@jefweb.com.br"
+        }
+    ]
+}
