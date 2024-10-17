@@ -13,3 +13,18 @@ function view(string $view, array $data = [])
     print $templates->render($view, $data);
 
 }
+
+function dump($variable)
+{
+    print '<pre>';
+    print ' <code>';
+    print_r($variable);
+    print ' </code>';
+    print '</pre>';
+}
+
+function dd($variable)
+{
+    dump($variable);
+    die;
+}

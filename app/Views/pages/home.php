@@ -1,8 +1,5 @@
-<?php
-$this->layout('layout', ['title' => $title]);
-?>
+<?php $this->layout('layout', ['title' => $title]); ?>
 
-
-<h1>Perfil de usuario</h1>
+<h3>Home page</h3>
 
 <p>Hello, <?php print $this->e($name); ?></p>

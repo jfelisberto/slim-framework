@@ -1,7 +1,5 @@
 <?php
 
-use app\Controllers\HomeController;
-use app\Controllers\UserController;
 use Slim\Factory\AppFactory;
 
 require '../vendor/autoload.php';
@@ -34,12 +32,9 @@ $app->addRoutingMiddleware();
  */
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
-
 // Define app routes
-$app->get('/', [HomeController::class, 'index']);
-
-$app->get('/user/create', [UserController::class, 'create']);
-
+$routes = include '../app/Routes/web.php';
+$routes($app);
 
 // Run app
 $app->run();

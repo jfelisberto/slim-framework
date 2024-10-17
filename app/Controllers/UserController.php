@@ -10,7 +10,14 @@ class UserController
     public function create(Request $request, Response $response)
     {
 
-        view('pages/users/form');
+        view('pages/users/create', ['title' => 'Criar usuário']);
+
+        return $response;
+    }
+
+    public function store(Request $request, Response $response)
+    {
+        dump($request);
 
         return $response;
     }

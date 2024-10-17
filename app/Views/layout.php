@@ -18,6 +18,11 @@
             margin-right: auto;
             margin-left: auto;
         }
+
+        .section {
+            margin-top: 7px;
+            padding: calc(var(--bs-gutter-x)* .5);
+        }
     </style>
 </head>
 
