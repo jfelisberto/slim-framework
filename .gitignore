@@ -1,1 +1,7 @@
 vendor/
+public/files/
+.env
+*kolossus*
+*Kolossus*
+*sped*
+*Sped*

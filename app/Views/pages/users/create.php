@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="mb-3">
                     <label for="login" class="form-label">NCM</label>
-                    <input type="text" id="ncm" name="ncm" class="form-control" maxlength="9" placeholder="" onblur="addZeroInput(event)" />
+                    <input type="text" id="ncm" name="ncm" value="17049020" class="form-control" maxlength="10" placeholder="" onblur="addZeroInput(event)" />
 
                 </div>
             </div>
@@ -63,10 +63,18 @@
       return valor;
     }
 
-    function aplicarMascara(valor) {
+    function mascaraCEST(valor) {
       // Adiciona a máscara no formato 00.000.00
       valor = valor.replace(/(\d{2})(\d)/, "$1.$2");
       valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+
+      return valor;
+    }
+
+    function mascaraNCM(valor) {
+      // Adiciona a máscara no formato 0000.00.00
+      valor = valor.replace(/(\d{4})(\d)/, "$1.$2");
+      valor = valor.replace(/(\d{2})(\d)/, "$1.$2");
 
       return valor;
     }
@@ -76,13 +84,15 @@
         // Adiciona zeros à esquerda e depois aplica a máscara
         // let valorComZeros = adicionarZeros(input.value);
         // input.value = aplicarMascara(valorComZeros);
-        input.value = aplicarMascara(input.value);
+        input.value = mascaraNCM(input.value);
     }
 
     function addZeroInput(event) {
         const input = event.target;
         // Adiciona zeros à esquerda e depois aplica a máscara
         let valorComZeros = adicionarZeros(input.value);
-        input.value = aplicarMascara(valorComZeros);
+        input.value = mascaraNCM(valorComZeros);
     }
+
+    document.onload(mascaraNCM(document.getElementById('ncm').value))
 </script>

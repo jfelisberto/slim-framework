@@ -30,15 +30,18 @@
 
     <header class="text-bg-dark">
         <div class="containerX">
-            <?php include 'components/header.php'; ?>
+            @include('components.header')
+            {{-- @yield('components/header') --}}
         </div>
     </header>
 
     <main class="d-flex flex-nowrap">
 
-        <?php include 'components/navbar.php'; ?>
+        @include('components.navbar');
 
-        <div class="container"><?php print $this->section('content'); ?></div>
+        <div class="container">
+            @yield('content')
+        </div>
 
     </main>
 

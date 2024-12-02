@@ -5,14 +5,16 @@ namespace app\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class UserController
+class UserController extends BaseController
 {
     public function create(Request $request, Response $response)
     {
 
-        view('pages/users/create', ['title' => 'Criar usuário']);
+        // return  view($response, 'pages.users.create', ['title' => 'Criar usuário']);
 
+        view('pages/users/create', ['title' => '']);
         return $response;
+
     }
 
     public function store(Request $request, Response $response)
