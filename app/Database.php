@@ -5,72 +5,117 @@ declare(strict_types=1);
 namespace app;
 
 use PDO;
+use PDOException;
 
 class Database
 {
     protected $db;
 
-    public function __construct()
+    public function __construct($db_host, $db_name, $db_user, $db_pswd)
     {
-        $this->db = self::getConnection();
 
-        // self::getConnection();
+        $this->db = self::getConnection($db_host, $db_name, $db_user, $db_pswd);
+
     }
 
-    private function getConnection(): PDO
+    private function getConnection($db_host, $db_name, $db_user, $db_pswd): PDO
     {
+        try {
 
-        // $db_host = '127.0.0.1';
-        // $db_name = 'integramaisDev';
-        // $db_user = 'erp';
-        // $db_pswd = 'uTo7aVsIA1ATCAtD';
+            $dsn = "mysql:host={$db_host};port=3306;dbname={$db_name};charset=utf8";
 
-        $db_host = '65.108.133.109';
-        $db_name = 'parametriza';# production
-        $db_user = 'parametriza_externo'; # production
-        $db_pswd = 'Oq718~%MN;1y'; # production
-        // $db_name = 'parametriza_dev'; # developer
-        // $db_user = 'parametriza_dev_externo'; # developer
-        // $db_pswd = 'Ia870!F<kzr*'; # developer
+            $connection = new PDO($dsn, $db_user, $db_pswd, [
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ]);
 
-        $dsn = "mysql:host={$db_host};port=3306;dbname={$db_name};charset=utf8";
+        } catch (PDOException $e) {
 
-        $connection = new PDO($dsn, $db_user, $db_pswd, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        ]);
+            $connection = "Failed to get DB handle: " . $e->getMessage() . "\n";
+            dump($connection);
+            die;
+
+        }
 
         return $connection;
     }
 
-    public function createData($query)
-    {}
+    /**
+     * createData
+     * @param $query string contains Statement coluns for table
+     * @param $data string conteins records associates for coluns
+     * @param return int last insert ID OR Exception error
+     */
+    public function createData($query, $data)
+    {
+        try {
+            $smt = $this->db->prepare($query);
+            $results = $smt->execute($data);
+            $results = intval($this->db->lastInsertId());
+        } catch(PDOException $e) {
+            $results = $e->getMessage();
+        }
+
+        return $results;
+
+    }
 
     public function readDataOnly($query)
     {
-        // dump($query);
-        $smt = $this->db->query($query);
-        // dump($smt);
-        $results = $smt->fetchObject();
-        // dump($results);
+
+        try {
+            $smt = $this->db->query($query);
+            $results = $smt->fetchObject();
+            $count = (int) $smt->rowCount();
+        } catch(PDOException $e) {
+            $results = $e->getMessage();
+        }
+
         return $results;
 
     }
 
     public function readData($query)
     {
-        // dump($query);
-        $smt = $this->db->query($query);
-        // dump($smt);
-        $results = $smt->fetchAll(PDO::FETCH_OBJ);
-        // dump($results);
+
+        try {
+            $smt = $this->db->query($query);
+            $results = $smt->fetchAll(PDO::FETCH_OBJ);
+            $count = (int) $smt->rowCount();
+        } catch(PDOException $e) {
+            $results = $e->getMessage();
+        }
+
         return $results;
 
     }
 
-    public function updateData()
-    {}
+    public function updateData($query, $data)
+    {
 
-    public function deleteData()
-    {}
+        try {
+            $smt = $this->db->prepare($query);
+            $results = $smt->execute($data);
+        } catch(PDOException $e) {
+            $results = $e->getMessage();
+        }
+
+        return $results;
+
+    }
+
+    public function deleteData($query, $data)
+    {
+
+        try {
+            $smt = $this->db->query($query);
+            $results = $smt->execute($data);
+        } catch(PDOException $e) {
+            $results = $e->getMessage();
+        }
+
+        return $results;
+
+    }
 
 }

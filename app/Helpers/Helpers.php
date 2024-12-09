@@ -9,12 +9,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface as Response;
 
-require __DIR__ . '/../../config/database.php';
 
 if (!function_exists('dbConnection')) {
     function dbConnection() {
-        $connection = new Database;
+
+        require __DIR__ . '/../../config/database.php';
+
+        $connection = new Database($db_host, $db_name, $db_user, $db_pswd);
+
         return $connection;
+
     }
 }
 
